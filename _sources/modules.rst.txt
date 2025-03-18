@@ -1,7 +1,7 @@
-MatmaCore
+matmacore
 =========
 
 .. toctree::
    :maxdepth: 4
 
-   MatmaCore
+   matmacore
