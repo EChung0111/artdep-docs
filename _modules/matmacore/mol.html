@@ -5,14 +5,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>matmacore.mol &mdash; matmacore 0.1.0 documentation</title>
+  <title>matmacore.mol &mdash; matmacore 0.1.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=92fd9be5" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/documentation_options.js?v=fd825880"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -41,7 +41,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../modules.html">MatmaCore</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">matmacore</a></li>
 </ul>
 
         </div>
@@ -362,6 +362,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span> <span class="o">=</span> <span class="n">atoms</span>
 
         <span class="k">if</span> <span class="n">job_type</span> <span class="o">==</span> <span class="s1">&#39;md&#39;</span><span class="p">:</span>
+            
+            <span class="bp">self</span><span class="o">.</span><span class="n">time_unit</span> <span class="o">=</span> <span class="s1">&#39;fs&#39;</span> <span class="c1"># Default unit in CP2K</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">software</span> <span class="o">=</span> <span class="s1">&#39;cp2k&#39;</span>
+            
             <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;.xyz&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">file</span><span class="p">)):</span>
                 <span class="c1"># Reads colvars straight from the xyz file. Requires specification of timestep and colvar coordinate.</span>
             
@@ -376,16 +380,15 @@
 
                 <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">colvar_data</span><span class="p">)))</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">software</span> <span class="o">=</span> <span class="s1">&#39;cp2k&#39;</span>
+
                 
             <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;.metadynLog&#39;</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
                 <span class="c1"># Reads colvars from the metadynLog file.</span>
                 
                 <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">software</span> <span class="o">=</span> <span class="s1">&#39;cp2k&#39;</span></div>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span></div>
 
-            
+
 <div class="viewcode-block" id="Mol.gromacs">
 <a class="viewcode-back" href="../../matmacore.html#matmacore.mol.Mol.gromacs">[docs]</a>
     <span class="k">def</span> <span class="nf">gromacs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
@@ -403,6 +406,10 @@
                 <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
                     <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span> <span class="ow">or</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;@&#39;</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
                         <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+                        
+                    <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;Time&#39;</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+                        <span class="n">time_unit</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;()&quot;&#39;</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">time_unit</span> <span class="o">=</span> <span class="n">time_unit</span>
                 <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
             <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="n">i</span><span class="p">)</span>
@@ -455,7 +462,7 @@
 <a class="viewcode-back" href="../../matmacore.html#matmacore.mol.Mol.csv">[docs]</a>
     <span class="k">def</span> <span class="nf">csv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">delimiter</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">):</span>
         
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="n">skiprows</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="n">skiprows</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="n">delimiter</span><span class="p">)</span></div>
 
 
 
@@ -550,6 +557,87 @@
 
         <span class="k">return</span> <span class="n">new_mol</span></div>
 
+
+
+<div class="viewcode-block" id="Reaction.create_mol_list">
+<a class="viewcode-back" href="../../matmacore.html#matmacore.mol.Reaction.create_mol_list">[docs]</a>
+    <span class="k">def</span> <span class="nf">create_mol_list</span><span class="p">(</span><span class="o">*</span><span class="n">groups</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates Mol objects from user-specified groups of directories and labels.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            *groups: Variable number of groups, where each group is a list of directories followed by a label.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            mol_list (list): List of Mol objects.</span>
+<span class="sd">            mol_label (list): List of labels for the Mol objects.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">mol_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">mol_label</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">groups</span><span class="p">:</span>
+            <span class="c1"># The last element in the group is the label</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="c1"># The rest are directories</span>
+            <span class="n">directories</span> <span class="o">=</span> <span class="n">group</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+            <span class="c1"># Create Mol objects for the directories in this group</span>
+            <span class="n">mol_objects</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="nb">dir</span> <span class="ow">in</span> <span class="n">directories</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="nb">dir</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Directory does not exist: </span><span class="si">{</span><span class="nb">dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+                <span class="n">molecule</span> <span class="o">=</span> <span class="n">Mol</span><span class="p">(</span><span class="nb">dir</span><span class="p">)</span>
+                <span class="n">molecule</span><span class="o">.</span><span class="n">gaussian</span><span class="p">()</span>  
+                <span class="n">mol_objects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">molecule</span><span class="p">)</span>
+
+            <span class="c1"># Combine Mol objects if there are multiple in the group</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">mol_objects</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">combined_mol</span> <span class="o">=</span> <span class="n">Reaction</span><span class="o">.</span><span class="n">combiner</span><span class="p">(</span><span class="n">mol_objects</span><span class="p">)</span>
+                <span class="n">mol_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">combined_mol</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">mol_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mol_objects</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+            <span class="n">mol_label</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">mol_list</span><span class="p">,</span> <span class="n">mol_label</span></div>
+
+    
+<div class="viewcode-block" id="Reaction.create_reaction_list">
+<a class="viewcode-back" href="../../matmacore.html#matmacore.mol.Reaction.create_reaction_list">[docs]</a>
+    <span class="k">def</span> <span class="nf">create_reaction_list</span><span class="p">(</span><span class="o">*</span><span class="n">reaction_definitions</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a standardized reaction list with names from input definitions.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            *reaction_definitions: Variable number of reaction definitions where each is:</span>
+<span class="sd">                (reaction_name, [dir1, dir2, &#39;label&#39;], [dir3, &#39;label&#39;], ...)</span>
+<span class="sd">                </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            list: [(reaction_name, mol_list, labels), ...]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">reaction_data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">standard_labels</span> <span class="o">=</span> <span class="kc">None</span>
+        
+        <span class="k">for</span> <span class="n">definition</span> <span class="ow">in</span> <span class="n">reaction_definitions</span><span class="p">:</span>
+            <span class="c1"># First element is reaction name, rest are pathway components</span>
+            <span class="n">reaction_name</span><span class="p">,</span> <span class="o">*</span><span class="n">components</span> <span class="o">=</span> <span class="n">definition</span>
+            
+            <span class="c1"># Generate mol_list and labels</span>
+            <span class="n">mol_list</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">Reaction</span><span class="o">.</span><span class="n">create_mol_list</span><span class="p">(</span><span class="o">*</span><span class="n">components</span><span class="p">)</span>
+            
+            <span class="c1"># Set standard labels from first reaction</span>
+            <span class="k">if</span> <span class="n">standard_labels</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">standard_labels</span> <span class="o">=</span> <span class="n">labels</span>
+            <span class="k">elif</span> <span class="n">labels</span> <span class="o">!=</span> <span class="n">standard_labels</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Warning: </span><span class="si">{</span><span class="n">reaction_name</span><span class="si">}</span><span class="s2"> labels don&#39;t match standard&quot;</span><span class="p">)</span>
+                <span class="n">labels</span> <span class="o">=</span> <span class="n">standard_labels</span> 
+                
+            <span class="n">reaction_data</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">reaction_name</span><span class="p">,</span> <span class="n">mol_list</span><span class="p">,</span> <span class="n">labels</span><span class="p">))</span>
+        
+        <span class="k">return</span> <span class="n">reaction_data</span></div>
+
+        
 
 <div class="viewcode-block" id="Reaction.delta">
 <a class="viewcode-back" href="../../matmacore.html#matmacore.mol.Reaction.delta">[docs]</a>

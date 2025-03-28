@@ -5,14 +5,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>matmacore.utilities &mdash; matmacore 0.1.0 documentation</title>
+  <title>matmacore.utilities &mdash; matmacore 0.1.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=92fd9be5" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/documentation_options.js?v=fd825880"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -41,7 +41,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../modules.html">MatmaCore</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">matmacore</a></li>
 </ul>
 
         </div>
@@ -218,11 +218,15 @@
 <div class="viewcode-block" id="hartree_to_kcal">
 <a class="viewcode-back" href="../../matmacore.html#matmacore.utilities.hartree_to_kcal">[docs]</a>
 <span class="k">def</span> <span class="nf">hartree_to_kcal</span><span class="p">(</span><span class="n">energy</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Conversion from Hartrees to kcal per mol&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">energy</span> <span class="o">*</span> <span class="mf">627.5095</span></div>
+
+
 
 <div class="viewcode-block" id="proper_minus">
 <a class="viewcode-back" href="../../matmacore.html#matmacore.utilities.proper_minus">[docs]</a>
 <span class="k">def</span> <span class="nf">proper_minus</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Replaces the default minus (-) with an actual minus sign instead of a dash&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">value</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;−&quot;</span><span class="p">)</span></div>
 
 </pre></div>
